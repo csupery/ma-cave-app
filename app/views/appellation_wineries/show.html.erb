@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Winery:</strong>
+  <%= @appellation_winery.winery_id %>
+</p>
+
+<p>
+  <strong>Appellation:</strong>
+  <%= @appellation_winery.appellation_id %>
+</p>
+
+<%= link_to 'Edit', edit_appellation_winery_path(@appellation_winery) %> |
+<%= link_to 'Back', appellation_wineries_path %>

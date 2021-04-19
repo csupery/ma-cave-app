@@ -10,18 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_203622) do
+ActiveRecord::Schema.define(version: 2021_04_19_213821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "appellation_wineries", force: :cascade do |t|
+    t.bigint "winery_id", null: false
+    t.bigint "appellation_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appellation_id"], name: "index_appellation_wineries_on_appellation_id"
+    t.index ["winery_id"], name: "index_appellation_wineries_on_winery_id"
+  end
+
   create_table "appellations", force: :cascade do |t|
     t.string "name"
     t.string "location"
-    t.bigint "winery_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["winery_id"], name: "index_appellations_on_winery_id"
   end
 
   create_table "my_wine_cellars", force: :cascade do |t|
@@ -81,17 +88,19 @@ ActiveRecord::Schema.define(version: 2021_04_19_203622) do
 
   create_table "wines", force: :cascade do |t|
     t.integer "wine_type"
-    t.bigint "appellation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["appellation_id"], name: "index_wines_on_appellation_id"
+    t.bigint "appellation_winery_id", null: false
+    t.string "name"
+    t.index ["appellation_winery_id"], name: "index_wines_on_appellation_winery_id"
   end
 
-  add_foreign_key "appellations", "wineries"
+  add_foreign_key "appellation_wineries", "appellations"
+  add_foreign_key "appellation_wineries", "wineries"
   add_foreign_key "my_wine_cellars", "users"
   add_foreign_key "my_wine_cellars", "wine_cellars"
   add_foreign_key "my_wines", "wine_cellars"
   add_foreign_key "my_wines", "wines"
   add_foreign_key "stocks", "my_wines"
-  add_foreign_key "wines", "appellations"
+  add_foreign_key "wines", "appellation_wineries"
 end
