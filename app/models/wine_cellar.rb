@@ -1,0 +1,2 @@
+class WineCellar < ApplicationRecord
+end

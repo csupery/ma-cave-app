@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @my_wine_cellar.user_id %>
+</p>
+
+<p>
+  <strong>Wine cellar:</strong>
+  <%= @my_wine_cellar.wine_cellar_id %>
+</p>
+
+<%= link_to 'Edit', edit_my_wine_cellar_path(@my_wine_cellar) %> |
+<%= link_to 'Back', my_wine_cellars_path %>

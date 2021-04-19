@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Wine Cellars</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Token</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wine_cellars.each do |wine_cellar| %>
+      <tr>
+        <td><%= wine_cellar.name %></td>
+        <td><%= wine_cellar.token %></td>
+        <td><%= link_to 'Show', wine_cellar %></td>
+        <td><%= link_to 'Edit', edit_wine_cellar_path(wine_cellar) %></td>
+        <td><%= link_to 'Destroy', wine_cellar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Wine Cellar', new_wine_cellar_path %>
