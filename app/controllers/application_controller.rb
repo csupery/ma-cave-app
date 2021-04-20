@@ -9,4 +9,12 @@ class ApplicationController < ActionController::Base
     # For additional in app/views/devise/registrations/edit.html.erb
     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name])
   end
+
+  def after_sign_in_path_for(resource)
+    if resource.my_wine_cellars.count > 0
+      my_wine_cellar_path(resource.my_wine_cellars[0])
+    else
+      my_wine_cellars_path
+    end
+  end
 end
