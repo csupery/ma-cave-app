@@ -22,10 +22,11 @@ class WineCellarsController < ApplicationController
   # POST /wine_cellars or /wine_cellars.json
   def create
     @wine_cellar = WineCellar.new(wine_cellar_params)
+    @my_wine_cellar = MyWineCellar.create(user: current_user, wine_cellar: @wine_cellar)
 
     respond_to do |format|
-      if @wine_cellar.save
-        format.html { redirect_to @wine_cellar, notice: "Wine cellar was successfully created." }
+      if @wine_cellar.save && @my_wine_cellar
+        format.html { redirect_to my_wine_cellars_url, notice: "Wine cellar was successfully created." }
         format.json { render :show, status: :created, location: @wine_cellar }
       else
         format.html { render :new, status: :unprocessable_entity }
