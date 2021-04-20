@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Appellation Wineries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Winery</th>
+      <th>Appellation</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @appellation_wineries.each do |appellation_winery| %>
+      <tr>
+        <td><%= appellation_winery.winery_id %></td>
+        <td><%= appellation_winery.appellation_id %></td>
+        <td><%= link_to 'Show', appellation_winery %></td>
+        <td><%= link_to 'Edit', edit_appellation_winery_path(appellation_winery) %></td>
+        <td><%= link_to 'Destroy', appellation_winery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Appellation Winery', new_appellation_winery_path %>
