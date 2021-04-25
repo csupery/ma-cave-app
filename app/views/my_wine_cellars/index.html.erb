@@ -14,8 +14,8 @@
   <tbody>
     <% @my_wine_cellars.each do |my_wine_cellar| %>
       <tr>
-        <td><%= my_wine_cellar.user_id %></td>
-        <td><%= my_wine_cellar.wine_cellar_id %></td>
+        <td><%= my_wine_cellar.user.first_name %></td>
+        <td><%= my_wine_cellar.wine_cellar.name %></td>
         <td><%= link_to 'Show', my_wine_cellar %></td>
         <td><%= link_to 'Edit', edit_my_wine_cellar_path(my_wine_cellar) %></td>
         <td><%= link_to 'Destroy', my_wine_cellar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -25,6 +25,7 @@
 </table>
 
 <br>
+
 
 <%= link_to 'Ajouter une cave existante', new_my_wine_cellar_path %>
 <%= link_to 'Créer une nouvelle cave', new_wine_cellar_path %>

@@ -13,6 +13,8 @@ class MyWineCellarsController < ApplicationController
   # GET /my_wine_cellars/new
   def new
     @my_wine_cellar = MyWineCellar.new
+    @wine_cellars = WineCellar.all
+
   end
 
   # GET /my_wine_cellars/1/edit
@@ -21,7 +23,8 @@ class MyWineCellarsController < ApplicationController
 
   # POST /my_wine_cellars or /my_wine_cellars.json
   def create
-    @my_wine_cellar = MyWineCellar.new(my_wine_cellar_params)
+    @wine_cellars = WineCellar.all
+    @my_wine_cellar = current_user.my_wine_cellars.create(wine_cellar: WineCellar.all.find_by(token: params[:my_wine_cellar][:token]))
 
     respond_to do |format|
       if @my_wine_cellar.save
