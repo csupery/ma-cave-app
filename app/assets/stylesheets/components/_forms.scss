@@ -1,0 +1,59 @@
+form.simple_form, form.form-member {
+  background-color: $white;
+  padding: 30px;
+  text-align: center;
+}
+
+form.simple_form input:not(.btn), form.simple_form select  {
+  border-radius: 10px;
+}
+
+form.simple_form input.form-control-file {
+  border-radius: 0px;
+}
+
+form.simple_form input {
+  color: $gray;
+}
+
+
+form.simple_form input, form.simple_form select {
+  height: 50px;
+}
+
+form.simple_form select {
+  color: #6F747C;
+}
+
+
+form.simple_form.edit_payment {
+  padding: 0;
+}
+
+form.simple_form .form-group.hidden {
+  margin-bottom:0;
+}
+
+form.simple_form.edit_task {
+  padding:0;
+}
+
+form.simple_form.edit_participation {
+  background-color: transparent;
+  padding: 10px;
+}
+
+form.simple_form .form-check-input {
+  height: 13px;
+  border-radius: 10px;
+}
+
+form.simple_form.edit_payment .margin-changes{
+  margin-bottom: -20px;
+  margin-top: -30px;
+}
+
+form.simple_form.edit_area {
+  padding: 0px;
+}
+

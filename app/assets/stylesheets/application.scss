@@ -12,3 +12,37 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+.wraper {
+  min-height: 70vh;
+}
+
+
+li a.text-wine {
+  color: $wine;
+}
+
+li a.text-gray {
+  color: $gray;
+}
+
+a.text-wine {
+  color: $wine;
+}
+
+a.text-gray {
+  color: $gray;
+}
+
+.text-gray {
+  color: $gray;
+}
+
+.text-wine {
+  color: $wine;
+}
+
+a {
+  color: $wine;
+}
+
