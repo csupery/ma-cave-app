@@ -1,0 +1,43 @@
+.btn.text-white {
+  color: $white;
+}
+
+.btn.text-orange {
+  background-color: #fff;
+  color: #E7836B;
+}
+
+.btn.active-filter {
+
+}
+
+.btn.inactive-filter {
+  color: #E7836B;
+  background-color: $white;
+  // border: 2px solid #E7836B;
+  &.active {
+    color: $white;
+    background-color: #E7836B
+  }
+}
+
+.btn {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 2px;
+}
+
+
+.card-gray .btn {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.background-none form.simple_form {
+  background-color: transparent !important;
+  padding: 0;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
