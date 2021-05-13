@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_25_111322) do
+ActiveRecord::Schema.define(version: 2021_05_13_111316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,11 +42,11 @@ ActiveRecord::Schema.define(version: 2021_04_25_111322) do
 
   create_table "my_wines", force: :cascade do |t|
     t.bigint "wine_id", null: false
-    t.bigint "wine_cellar_id", null: false
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["wine_cellar_id"], name: "index_my_wines_on_wine_cellar_id"
+    t.bigint "my_wine_cellar_id", null: false
+    t.index ["my_wine_cellar_id"], name: "index_my_wines_on_my_wine_cellar_id"
     t.index ["wine_id"], name: "index_my_wines_on_wine_id"
   end
 
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2021_04_25_111322) do
   add_foreign_key "appellation_wineries", "wineries"
   add_foreign_key "my_wine_cellars", "users"
   add_foreign_key "my_wine_cellars", "wine_cellars"
-  add_foreign_key "my_wines", "wine_cellars"
+  add_foreign_key "my_wines", "my_wine_cellars"
   add_foreign_key "my_wines", "wines"
   add_foreign_key "stocks", "my_wines"
   add_foreign_key "wines", "appellation_wineries"

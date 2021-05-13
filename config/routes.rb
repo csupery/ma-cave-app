@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root to: "pages#home"
   resources :appellation_wineries
 
+  resources :wine_cellars
   resources :my_wine_cellars do
+    resources :wines
     resources :my_wines
   end
 
@@ -11,6 +13,5 @@ Rails.application.routes.draw do
   resources :wines
   resources :appellations
   resources :wineries
-  resources :wine_cellars
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

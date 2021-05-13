@@ -1,7 +1,9 @@
 class Wine < ApplicationRecord
   belongs_to :appellation_winery
+  has_many :my_wines, dependent: :destroy
 
-  enum size: WINE_TYPE
+
+  enum wine_type: WINE_TYPE
 
   validates :name, presence: true
   validates :wine_type, presence: true

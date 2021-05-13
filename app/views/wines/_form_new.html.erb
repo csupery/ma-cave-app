@@ -1,14 +1,11 @@
-
-<%= simple_form_for(@stock) do |f| %>
+<%= simple_form_for([ @my_wine_cellar, @wine ], method: :post, url: my_wine_cellar_wines_url) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :quantity %>
-    <%= f.input :size, collection: SIZE %>
-    <%= f.input :vintage %>
-    <%= f.association :my_wine %>
-    <%= f.input :description %>
+    <%= f.input :name %>
+    <%= f.input :wine_type, collection: WINE_TYPE, required: true %>
+    <%= f.association :appellation_winery %>
   </div>
 
   <div class="form-actions">

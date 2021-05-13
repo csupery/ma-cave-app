@@ -5,8 +5,11 @@
 <table>
   <thead>
     <tr>
+      <th>Winery Name</th>
+      <th>Wine Name</th>
       <th>Wine type</th>
       <th>Appellation</th>
+      <th>Location</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,11 +17,14 @@
   <tbody>
     <% @wines.each do |wine| %>
       <tr>
+        <td><%= wine.appellation_winery.winery.name %></td>
+        <td><%= wine.name %></td>
         <td><%= wine.wine_type %></td>
-        <td><%= wine.appellation_id %></td>
-        <td><%= link_to 'Show', wine %></td>
-        <td><%= link_to 'Edit', edit_wine_path(wine) %></td>
-        <td><%= link_to 'Destroy', wine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= wine.appellation_winery.appellation.name %></td>
+        <td><%= wine.appellation_winery.appellation.location %></td>
+        <td><%= link_to 'Show', my_wine_cellar_wine_path(@my_wine_cellar, wine) %></td>
+        <td><%= link_to 'Edit', edit_my_wine_cellar_wine_path(@my_wine_cellar, wine) %></td>
+        <td><%= link_to 'Destroy', my_wine_cellar_wine_path(@my_wine_cellar, wine), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Wine', new_wine_path %>
+<%= link_to 'New Wine', new_my_wine_cellar_wine_path %>

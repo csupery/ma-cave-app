@@ -3,11 +3,13 @@ class MyWinesController < ApplicationController
 
   # GET /my_wines or /my_wines.json
   def index
-    @my_wines = MyWine.all
+    @my_wine_cellar = MyWineCellar.find(params[:my_wine_cellar_id])
+    @my_wines = MyWine.where(my_wine_cellar_id: params[:my_wine_cellar_id])
   end
 
   # GET /my_wines/1 or /my_wines/1.json
   def show
+    @my_wine_cellar = MyWineCellar.find(params[:my_wine_cellar_id])
   end
 
   # GET /my_wines/new
@@ -17,15 +19,17 @@ class MyWinesController < ApplicationController
 
   # GET /my_wines/1/edit
   def edit
+    @my_wine_cellar = MyWineCellar.find(params[:my_wine_cellar_id])
   end
 
   # POST /my_wines or /my_wines.json
   def create
     @my_wine = MyWine.new(my_wine_params)
+    @my_wine.my_wine_cellar = MyWineCellar.find(params[:my_wine_cellar_id])
 
     respond_to do |format|
       if @my_wine.save
-        format.html { redirect_to @my_wine, notice: "My wine was successfully created." }
+        format.html { redirect_to my_wine_cellar_my_wines_url  , notice: "My wine was successfully created." }
         format.json { render :show, status: :created, location: @my_wine }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -64,6 +68,6 @@ class MyWinesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def my_wine_params
-      params.require(:my_wine).permit(:wine_id, :wine_cellar_id, :description)
+      params.require(:my_wine).permit(:wine_id, :my_wine_cellar_id, :description)
     end
 end

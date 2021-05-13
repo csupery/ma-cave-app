@@ -7,7 +7,7 @@
 
 <p>
   <strong>Wine cellar:</strong>
-  <%= @my_wine.wine_cellar_id %>
+  <%= @my_wine.my_wine_cellar_id %>
 </p>
 
 <p>
@@ -15,5 +15,5 @@
   <%= @my_wine.description %>
 </p>
 
-<%= link_to 'Edit', edit_my_wine_path(@my_wine) %> |
-<%= link_to 'Back', my_wines_path %>
+<%= link_to 'Edit', edit_my_wine_cellar_my_wine_path(@my_wine_cellar, @my_wine) %> |
+<%= link_to 'Back', my_wine_cellar_my_wines_path(@my_wine_cellar) %>
