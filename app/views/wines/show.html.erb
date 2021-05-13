@@ -1,14 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Wine name:</strong>
+  <%= @wine.name %>
+</p>
+<p>
   <strong>Wine type:</strong>
   <%= @wine.wine_type %>
 </p>
 
 <p>
   <strong>Appellation:</strong>
-  <%= @wine.appellation_id %>
+  <%= @wine.appellation_winery %>
 </p>
 
-<%= link_to 'Edit', edit_wine_path(@wine) %> |
-<%= link_to 'Back', wines_path %>
+<%= link_to 'Edit', edit_my_wine_cellar_wine_path(@my_wine_cellar, @wine) %> |
+<%= link_to 'Back', my_wine_cellar_wines_path(@my_wine_cellar) %>

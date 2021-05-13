@@ -5,9 +5,10 @@
 <table>
   <thead>
     <tr>
+      <th>Winery</th>
       <th>Wine</th>
-      <th>Wine cellar</th>
       <th>Description</th>
+      <th>Wine Type</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,12 +16,13 @@
   <tbody>
     <% @my_wines.each do |my_wine| %>
       <tr>
-        <td><%= my_wine.wine_id %></td>
-        <td><%= my_wine.wine_cellar_id %></td>
+        <td><%= my_wine.wine.appellation_winery.winery.name %></td>
+        <td><%= my_wine.wine.name %></td>
         <td><%= my_wine.description %></td>
-        <td><%= link_to 'Show', my_wine %></td>
-        <td><%= link_to 'Edit', edit_my_wine_path(my_wine) %></td>
-        <td><%= link_to 'Destroy', my_wine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= my_wine.wine.wine_type %></td>
+        <td><%= link_to 'Show', my_wine_cellar_my_wine_path(@my_wine_cellar, my_wine) %></td>
+        <td><%= link_to 'Edit', edit_my_wine_cellar_my_wine_path(@my_wine_cellar, my_wine) %></td>
+        <td><%= link_to 'Destroy', my_wine_cellar_my_wine_path(@my_wine_cellar, my_wine), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New My Wine', new_my_wine_path %>
+<%= link_to 'New My Wine', new_my_wine_cellar_my_wine_path %>

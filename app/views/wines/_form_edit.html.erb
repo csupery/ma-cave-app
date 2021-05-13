@@ -1,11 +1,11 @@
-
-<%= simple_form_for(@wine) do |f| %>
+<%= simple_form_for([ @my_wine_cellar, @wine ]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :wine_type %>
-    <%= f.association :appellation %>
+    <%= f.input :name %>
+    <%= f.input :wine_type, collection: WINE_TYPE, required: true %>
+    <%= f.association :appellation_winery %>
   </div>
 
   <div class="form-actions">
