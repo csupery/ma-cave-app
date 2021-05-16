@@ -3,11 +3,54 @@ class WineriesController < ApplicationController
 
   # GET /wineries or /wineries.json
   def index
-    @wineries = Winery.all
+    if params[:my_wine_cellar_id].present?
+      @my_wine_cellar = MyWineCellar.find(params[:my_wine_cellar_id])
+      @wineries = Winery.select(Winery.arel_table[Arel.star]).where(
+                  MyWine.arel_table[:my_wine_cellar_id].eq(@my_wine_cellar.id)
+                ).joins(
+                  Winery.arel_table.join(AppellationWinery.arel_table).on(
+                    Winery.arel_table[:id].eq(AppellationWinery.arel_table[:winery_id])
+                  ).join_sources
+                ).joins(
+                  Winery.arel_table.join(Wine.arel_table).on(
+                    AppellationWinery.arel_table[:id].eq(Wine.arel_table[:appellation_winery_id])
+                  ).join_sources
+                ).joins(
+                  Winery.arel_table.join(MyWine.arel_table).on(
+                    Wine.arel_table[:id].eq(MyWine.arel_table[:wine_id])
+                  ).join_sources
+                ).group(Winery.arel_table[:id])
+    else
+      @wineries = Winery.all
+    end
   end
 
   # GET /wineries/1 or /wineries/1.json
   def show
+    if params[:my_wine_cellar_id].present?
+
+      @my_wine_cellar = MyWineCellar.find(params[:my_wine_cellar_id])
+      @my_wines = MyWine.where(my_wine_cellar_id: params[:id])
+      @stocks = Stock.select(Stock.arel_table[Arel.star]).where(
+                MyWine.arel_table[:my_wine_cellar_id].eq(@my_wine_cellar.id).and(
+                  AppellationWinery.arel_table[:winery_id].eq(@winery.id)
+                )
+              ).joins(
+                Stock.arel_table.join(MyWine.arel_table).on(
+                  MyWine.arel_table[:id].eq(Stock.arel_table[:my_wine_id])
+                ).join_sources
+              ).joins(
+                Stock.arel_table.join(Wine.arel_table).on(
+                  Wine.arel_table[:id].eq(MyWine.arel_table[:wine_id])
+                ).join_sources
+              ).joins(
+                Stock.arel_table.join(AppellationWinery.arel_table).on(
+                  Wine.arel_table[:appellation_winery_id].eq(AppellationWinery.arel_table[:id])
+                ).join_sources
+              )
+        @sizes = (@stocks.map do |stock| stock.size end).uniq.sort_by &SIZE.method(:index)
+        @vintages = (@stocks.map do |stock| stock.vintage end).uniq.sort
+    end
   end
 
   # GET /wineries/new

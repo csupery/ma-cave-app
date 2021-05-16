@@ -6,36 +6,42 @@
 <%= link_to 'Back', my_wine_cellars_path %>
 
 <% @my_wineries.each do |my_winery| %>
-  <div class="wine-card">
-    <div class="d-flex justify-content-between">
-      <div>
-        <strong><%= my_winery.winery.name %></strong>
-        <p><%= my_winery.appellation.name %></p>
-      </div>
-      <div>
-
-                <table>
-          <% @my_wines.each do |my_wine|%>
-            <% if my_wine.wine.appellation_winery.winery_id == my_winery.winery_id %>
-          <% @by_year = my_wine.stocks.group_by {|w| w.vintage}.transform_values { |vals| vals.sum { |val| val[:quantity] } }.sort%>
-                  <thead>
-                    <tr>
-                      <% @by_year.map do |vintage, stock|  %>
-                        <th><%= vintage %></th>
-                      <% end %>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                     <% @by_year.map do |vintage, stock|  %>
-                        <td><%= stock %></td>
-                      <% end %>
-                    </tr>
-                  </tbody>
-              <% end %>
+  <%= link_to my_wine_cellar_winery_path(@my_wine_cellar, my_winery.id), class: "secondary-link text-decoration-none" do %>
+    <div class="wine-card">
+      <div class="d-flex justify-content-between">
+        <div>
+          <strong><%= my_winery.name %></strong>
+          <div>
+          </div>
+          <div class="mt-2 ml-3">
+            <% my_winery.appellations.each do |appellation|%>
+              <p class="m-0"><i> <%= appellation.name %></i></p>
             <% end %>
-                </table>
+          </div>
+        </div>
+        <div>
+            <% @stocks_by_winery = @stocks.select(Stock.arel_table[Arel.star]).where(AppellationWinery.arel_table[:winery_id].eq(my_winery.id)) %>
+            <% @stocks_by_year = @stocks_by_winery.group_by {|w| w.vintage}.transform_values { |vals| vals.sum { |val| val[:quantity] } }.sort %>
+
+          <table>
+            <thead>
+              <tr>
+                <% @stocks_by_year.map do |vintage, stock|  %>
+                  <th><%= vintage %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+               <% @stocks_by_year.map do |vintage, stock|  %>
+                  <td><%= stock %></td>
+                <% end %>
+              </tr>
+            </tbody>
+            </table>
+
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
