@@ -2,41 +2,43 @@
 
 <div class="text-center mb-5"><h2><%= @winery.name %></h2></div>
 
-<% @winery.appellation_wineries.each do |appellation_winery| %>
-  <div class="wine-card">
-    <h4><%= appellation_winery.appellation.name %></h4>
-      <table >
-        <thead>
-          <tr>
-            <th scope='col'></th>
-            <% @sizes.each do |size| %>
-              <th class="text-center"><%= size %></th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-      <% appellation_winery.wines.each do |wine| %>
-            <td><%= wine.name %></td>
-            <% @vintages.each do |vintage| %>
-                <% if @stocks.where(vintage: vintage, my_wine_id: wine.my_wines.first.id).exists? %>
-                  <tr>
-                    <th class="text-center"><%= vintage %></th>
-                  <% @sizes.each do |size| %>
-                    <% if @stocks.where(vintage: vintage, size:size, my_wine_id: wine.my_wines.first.id).blank? %>
-                      <td></td>
-                    <% else %>
-                    <% @stock = @stocks.find { |stock| stock.size == size && stock.vintage == vintage} %>
-                      <td class="text-center"><%= @stock.quantity %> </td>
+<% if params[:my_wine_cellar_id].present? %>
+  <% @winery.appellation_wineries.each do |appellation_winery| %>
+    <div class="wine-card">
+      <h4><%= appellation_winery.appellation.name %></h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope='col'></th>
+              <% @sizes.each do |size| %>
+                <th class="text-center"><%= size %></th>
+              <% end %>
+            </tr>
+          </thead>
+        <% appellation_winery.wines.each do |wine| %>
+          <tbody class="table">
+              <td class= "align-middle"><h5 class="p-0 m-0"><%= wine.name %></h5> </td>
+              <% @vintages.each do |vintage| %>
+                  <% if @stocks.where(vintage: vintage, my_wine_id: wine.my_wines.first.id).exists? %>
+                    <tr>
+                      <th class="text-center"><%= vintage %></th>
+                    <% @sizes.each do |size| %>
+                      <% if @stocks.where(vintage: vintage, size:size, my_wine_id: wine.my_wines.first.id).blank? %>
+                        <td></td>
+                      <% else %>
+                      <% @stock = @stocks.find { |stock| stock.size == size && stock.vintage == vintage} %>
+                        <td class="text-center"><%= @stock.quantity %> </td>
+                      <% end %>
                     <% end %>
+                    </tr>
                   <% end %>
-                <% end %>
-                  </tr>
 
-            <% end %>
-          </tbody>
-      <% end %>
-    </table>
-  </div>
+              <% end %>
+            </tbody>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
 <% end %>
 
 <%= link_to 'Edit', edit_winery_path(@winery) %> |

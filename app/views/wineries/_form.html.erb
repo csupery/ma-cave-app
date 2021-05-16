@@ -6,6 +6,10 @@
   <div class="form-inputs">
     <%= f.input :name %>
   </div>
+  <%= f.simple_fields_for :appellations do |a| %>
+    <%= a.input :name %>
+    <%= a.input :location %>
+  <% end %>
 
   <div class="form-actions">
     <%= f.button :submit %>
