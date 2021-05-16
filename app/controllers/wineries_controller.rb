@@ -3,7 +3,26 @@ class WineriesController < ApplicationController
 
   # GET /wineries or /wineries.json
   def index
-    @wineries = Winery.all
+    if params[:my_wine_cellar_id].present?
+      @my_wine_cellar = MyWineCellar.find(params[:my_wine_cellar_id])
+      @wineries = Winery.select(Winery.arel_table[Arel.star]).where(
+                  MyWine.arel_table[:my_wine_cellar_id].eq(@my_wine_cellar.id)
+                ).joins(
+                  Winery.arel_table.join(AppellationWinery.arel_table).on(
+                    Winery.arel_table[:id].eq(AppellationWinery.arel_table[:winery_id])
+                  ).join_sources
+                ).joins(
+                  Winery.arel_table.join(Wine.arel_table).on(
+                    AppellationWinery.arel_table[:id].eq(Wine.arel_table[:appellation_winery_id])
+                  ).join_sources
+                ).joins(
+                  Winery.arel_table.join(MyWine.arel_table).on(
+                    Wine.arel_table[:id].eq(MyWine.arel_table[:wine_id])
+                  ).join_sources
+                ).group(Winery.arel_table[:id])
+    else
+      @wineries = Winery.all
+    end
   end
 
   # GET /wineries/1 or /wineries/1.json

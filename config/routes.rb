@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :my_wine_cellars do
     resources :wines
     resources :my_wines
+    resources :wineries
   end
 
   resources :stocks
