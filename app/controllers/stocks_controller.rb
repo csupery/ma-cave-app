@@ -22,15 +22,16 @@ class StocksController < ApplicationController
   # POST /stocks or /stocks.json
   def create
     @stock = Stock.new(stock_params)
+    @previous_stock = Stock.where(vintage: @stock.vintage, size: @stock.size, my_wine_id: @stock.my_wine_id).first
 
-    respond_to do |format|
-      if @stock.save
-        format.html { redirect_to @stock, notice: "Stock was successfully created." }
-        format.json { render :show, status: :created, location: @stock }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @stock.errors, status: :unprocessable_entity }
-      end
+    if @previous_stock
+      @new_quantity = @stock.quantity + @previous_stock.quantity
+      @previous_stock.update(quantity: @new_quantity)
+      redirect_to stocks_path
+    elsif @stock.save
+      redirect_to @stock, notice: 'Stock was successfully created.'
+    else
+      render :new
     end
   end
 

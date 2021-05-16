@@ -8,19 +8,37 @@ class MyWineCellarsController < ApplicationController
 
   # GET /my_wine_cellars/1 or /my_wine_cellars/1.json
   def show
+    @my_wineries = Winery.select(Winery.arel_table[Arel.star]).where(
+                  MyWine.arel_table[:my_wine_cellar_id].eq(@my_wine_cellar.id)
+                ).joins(
+                  Winery.arel_table.join(AppellationWinery.arel_table).on(
+                    AppellationWinery.arel_table[:winery_id].eq(Winery.arel_table[:id])
+                  ).join_sources
+                ).joins(
+                  Winery.arel_table.join(Wine.arel_table).on(
+                    Wine.arel_table[:appellation_winery_id].eq(AppellationWinery.arel_table[:id])
+                  ).join_sources
+                ).joins(
+                  Winery.arel_table.join(MyWine.arel_table).on(
+                    MyWine.arel_table[:wine_id].eq(Wine.arel_table[:id])
+                  ).join_sources
+                ).group(Winery.arel_table[:id])
     @my_wines = MyWine.where(my_wine_cellar_id: params[:id])
-    @appellation_wineries = AppellationWinery.all
-    @my_appellation_wineries = AppellationWinery.select(AppellationWinery.arel_table[Arel.star])
-                  .where(MyWine.arel_table[:my_wine_cellar_id].eq(@my_wine_cellar.id))
-                  .joins(AppellationWinery.arel_table.join(Wine.arel_table)
-                    .on(Wine.arel_table[:appellation_winery_id].eq(AppellationWinery.arel_table[:id])).join_sources)
-                  .joins(AppellationWinery.arel_table.join(MyWine.arel_table)
-                    .on(MyWine.arel_table[:wine_id].eq(Wine.arel_table[:id])).join_sources)
-                  .joins(AppellationWinery.arel_table.join(Winery.arel_table)
-                    .on(Winery.arel_table[:id].eq(AppellationWinery.arel_table[:winery_id])).join_sources)
-                  # .group(AppellationWinery.arel_table[:id])
-                  # .group(AppellationWinery.arel_table[:winery_id])
-    @my_wineries = @my_appellation_wineries.group(AppellationWinery.arel_table[:id]).group(AppellationWinery.arel_table[:winery_id])
+    @stocks = Stock.select(Stock.arel_table[Arel.star]).where(
+                MyWine.arel_table[:my_wine_cellar_id].eq(@my_wine_cellar.id)
+              ).joins(
+                Stock.arel_table.join(MyWine.arel_table).on(
+                  MyWine.arel_table[:id].eq(Stock.arel_table[:my_wine_id])
+                ).join_sources
+              ).joins(
+                Stock.arel_table.join(Wine.arel_table).on(
+                  Wine.arel_table[:id].eq(MyWine.arel_table[:wine_id])
+                ).join_sources
+              ).joins(
+                Stock.arel_table.join(AppellationWinery.arel_table).on(
+                  Wine.arel_table[:appellation_winery_id].eq(AppellationWinery.arel_table[:id])
+                ).join_sources
+              )
   end
 
   # GET /my_wine_cellars/new
