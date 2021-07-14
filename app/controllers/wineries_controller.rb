@@ -56,6 +56,8 @@ class WineriesController < ApplicationController
   # GET /wineries/new
   def new
     @winery = Winery.new
+    @appellation = @winery.appellations.build
+    @appellation_winery = AppellationWinery.create(winery_id: @winery.id, appellation_id: @appellation.id)
   end
 
   # GET /wineries/1/edit
@@ -107,6 +109,6 @@ class WineriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def winery_params
-      params.require(:winery).permit(:name)
+      params.require(:winery).permit(:name, appellations_attributes: [:name, :location], appellation_ids: [])
     end
 end

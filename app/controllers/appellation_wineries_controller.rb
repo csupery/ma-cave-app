@@ -64,6 +64,6 @@ class AppellationWineriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def appellation_winery_params
-      params.require(:appellation_winery).permit(:winery_id, :appellation_id)
+      params.require(:appellation_winery).permit(:winery_id, :appellation_id, wineries_attributes: [:id, :_destroy, :name])
     end
 end

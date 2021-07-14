@@ -1,7 +1,13 @@
-
 <%= simple_form_for(@appellation_winery) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <%= f.simple_fields_for :wineries do |winery| %>
+    <%= render 'winery_fields', :f => winery %>
+  <% end %>
+  <div class='links'>
+    <%= link_to_add_association 'Add Winery', f, :winery %>
+  </div>
 
   <div class="form-inputs">
     <%= f.association :winery %>

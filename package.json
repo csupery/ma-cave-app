@@ -2,11 +2,13 @@
   "name": "ma_cave_app",
   "private": true,
   "dependencies": {
+    "@nathanvda/cocoon": "^1.2.14",
     "@rails/actioncable": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.3.0",
     "bootstrap": "^4.6.0",
     "jquery": "^3.6.0",
+    "js-autocomplete": "^1.0.4",
     "places.js": "^1.19.0",
     "popper.js": "^1.16.1",
     "stimulus": "^2.0.0",

@@ -1,13 +1,29 @@
-
 <%= simple_form_for(@winery) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :name %>
+    <%= f.input :name, placeholder: "New Winery", label: false %>
   </div>
-
+  <%#= f.simple_fields_for :appellations do |a| %>
+    <div class='dropdown-check-list'>
+      <%= f.association :appellations,
+                        collection: Appellation.all,
+                        as: :check_boxes,
+                        :label_method => lambda { |appellation| "#{appellation.name} | #{appellation.location}" },
+                        include_blank: true,
+                        value_method: :id,
+                        input_html: {data: {behaviour: 'select-all'}} %>
+    </div>
+  <%# end%>
+   <!--  <%#= f.simple_fields_for :appellations do |b| %>
+      <%#= b.input :name, wrapper: :dynamic %>
+        <%#= b.input :location, wrapper: :dynamic%>
+  <#% end%>
+  <button id=addAppellation>Add more appellations</button> -->
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+
+

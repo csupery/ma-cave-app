@@ -7,6 +7,7 @@
     <tr>
       <th>Winery</th>
       <th>Appellation</th>
+      <th>Created at</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,8 +15,9 @@
   <tbody>
     <% @appellation_wineries.each do |appellation_winery| %>
       <tr>
-        <td><%= appellation_winery.winery_id %></td>
-        <td><%= appellation_winery.appellation_id %></td>
+        <td><%= appellation_winery.winery.name %></td>
+        <td><%= appellation_winery.appellation.name %></td>
+        <td><%= appellation_winery.appellation.created_at %></td>
         <td><%= link_to 'Show', appellation_winery %></td>
         <td><%= link_to 'Edit', edit_appellation_winery_path(appellation_winery) %></td>
         <td><%= link_to 'Destroy', appellation_winery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
