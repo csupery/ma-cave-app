@@ -29,7 +29,9 @@ gem 'font-awesome-sass', '~> 5.6.1'
 gem 'simple_form'
 gem 'devise'
 gem 'pg'
-gem "cocoon"
+gem 'cocoon'
+gem 'simple_form_autocomplete', git: "https://github.com/apohllo/simple_form_autocomplete.git",
+  branch: "create-new-values-in-autocomplete"
 
 group :development, :test do
   gem 'pry-byebug'

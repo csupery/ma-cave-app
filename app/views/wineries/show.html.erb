@@ -32,12 +32,15 @@
                     <% end %>
                     </tr>
                   <% end %>
-
               <% end %>
             </tbody>
         <% end %>
       </table>
     </div>
+  <% end %>
+  <% else %>
+  <% @winery.appellation_wineries.each do |appellation_winery| %>
+    <h4><%= appellation_winery.appellation.name %></h4>
   <% end %>
 <% end %>
 

@@ -3,5 +3,5 @@ class AppellationWinery < ApplicationRecord
   belongs_to :appellation
   has_many :wines, dependent: :destroy
 
-  accepts_nested_attributes_for :winery, reject_if: :all_blank
+  accepts_nested_attributes_for :winery
 end

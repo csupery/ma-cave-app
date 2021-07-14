@@ -4,7 +4,7 @@
 
 <%= link_to 'Edit', edit_my_wine_cellar_path(@my_wine_cellar) %> |
 <%= link_to 'Back', my_wine_cellars_path %> |
-<%= link_to 'Add new', new_appellation_winery_path %>
+<%= link_to 'Add new', new_winery_path %>
 
 <% @my_wineries.each do |my_winery| %>
   <%= link_to my_wine_cellar_winery_path(@my_wine_cellar, my_winery.id), class: "secondary-link text-decoration-none" do %>
