@@ -11,8 +11,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if resource.my_wine_cellars.count < 1
+    if resource.my_wine_cellars.count == 1
       my_wine_cellar_path(resource.my_wine_cellars[0])
+    elsif resource.my_wine_cellars.count == 0
+      new_wine_cellar_path
     else
       my_wine_cellars_path
     end
