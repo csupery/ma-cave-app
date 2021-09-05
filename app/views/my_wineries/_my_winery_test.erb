@@ -1,0 +1,5 @@
+<%= simple_form_for my_winery, class: "background-none p-0", url: my_winery, method: :patch do |f| %>
+  <%= f.input :winery_id, :as => :hidden, :input_html => { :value => @winery.id }, remote: true %>
+  <%= f.input :my_wine_cellar, :as => :hidden, :input_html => { :value => @my_wine_cellar.id }, remote: true %>
+<%= f.submit "Add to My Wine Cellar", class: "btn btn-info shadow text-orange px-3" %>
+<% end %>

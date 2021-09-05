@@ -21,6 +21,9 @@
         <td><%= link_to 'Show', winery %></td>
         <td><%= link_to 'Edit', edit_winery_path(winery) %></td>
         <td><%= link_to 'Destroy', winery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+        <td><%= button_to '<' ,{:controller => 'my_wineries', :action => 'create', params: { my_winery: { winery_id: winery.id, my_wine_cellar_id:@my_wine_cellar.id }} }, {:method => :post} %></td>
+        </td>
 
       </tr>
     <% end %>

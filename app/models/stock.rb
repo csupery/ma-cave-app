@@ -1,5 +1,7 @@
 class Stock < ApplicationRecord
-  belongs_to :my_wine
+  belongs_to :wine
+  belongs_to :my_wine_cellar
+  belongs_to :winery
 
   enum size: SIZE
 

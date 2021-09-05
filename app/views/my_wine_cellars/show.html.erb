@@ -4,39 +4,39 @@
 
 <%= link_to 'Edit', edit_my_wine_cellar_path(@my_wine_cellar) %> |
 <%= link_to 'Back', my_wine_cellars_path %> |
-<%= link_to 'Add new', new_winery_path %>
+<%= link_to 'Add new', my_wine_cellar_wineries_path(@my_wine_cellar) %>
 
 <% @my_wineries.each do |my_winery| %>
-  <%= link_to my_wine_cellar_winery_path(@my_wine_cellar, my_winery.id), class: "secondary-link text-decoration-none" do %>
+  <%= link_to my_wine_cellar_winery_path(@my_wine_cellar, my_winery.winery_id), class: "secondary-link text-decoration-none" do %>
     <div class="wine-card">
       <div class="d-flex justify-content-between">
         <div>
-          <strong><%= my_winery.name %></strong>
+          <strong><%= my_winery.winery.name %></strong>
           <div>
           </div>
           <div class="mt-2 ml-3">
-            <% my_winery.appellations.each do |appellation|%>
+            <% my_winery.winery.appellations.each do |appellation|%>
               <p class="m-0"><i> <%= appellation.name %></i></p>
             <% end %>
           </div>
         </div>
         <div>
-            <% @stocks_by_winery = @stocks.select(Stock.arel_table[Arel.star]).where(AppellationWinery.arel_table[:winery_id].eq(my_winery.id)) %>
+            <% @stocks_by_winery = @stocks.where(wine_id: my_winery.winery.wine.id) %>
             <% @stocks_by_year = @stocks_by_winery.group_by {|w| w.vintage}.transform_values { |vals| vals.sum { |val| val[:quantity] } }.sort %>
 
           <table>
             <thead>
               <tr>
-                <% @stocks_by_year.map do |vintage, stock|  %>
-                  <th><%= vintage %></th>
-                <% end %>
+                <%# @stocks_by_year.map do |vintage, stock|  %>
+                  <th><%#= vintage %></th>
+                <%# end %>
               </tr>
             </thead>
             <tbody>
               <tr>
-               <% @stocks_by_year.map do |vintage, stock|  %>
-                  <td><%= stock %></td>
-                <% end %>
+               <%# @stocks_by_year.map do |vintage, stock|  %>
+                  <td><%#= stock %></td>
+                <%# end %>
               </tr>
             </tbody>
             </table>

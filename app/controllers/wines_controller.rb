@@ -29,10 +29,9 @@ class WinesController < ApplicationController
   def create
     @wine = Wine.new(wine_params)
     @my_wine_cellar = MyWineCellar.find(params[:my_wine_cellar_id])
-    @my_wine = MyWine.create!(wine: @wine, my_wine_cellar: @my_wine_cellar)
 
     respond_to do |format|
-      if @wine.save && @my_wine.save
+      if @wine.save
         format.html { redirect_to my_wine_cellar_wines_url, notice: "Wine was successfully created." }
         format.json { render :show, status: :created, location: @wine }
       else
