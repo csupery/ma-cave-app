@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_13_111316) do
+ActiveRecord::Schema.define(version: 2021_09_05_161238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,13 +40,20 @@ ActiveRecord::Schema.define(version: 2021_05_13_111316) do
     t.index ["wine_cellar_id"], name: "index_my_wine_cellars_on_wine_cellar_id"
   end
 
+  create_table "my_wineries", force: :cascade do |t|
+    t.bigint "my_wine_cellar_id", null: false
+    t.bigint "winery_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["my_wine_cellar_id"], name: "index_my_wineries_on_my_wine_cellar_id"
+    t.index ["winery_id"], name: "index_my_wineries_on_winery_id"
+  end
+
   create_table "my_wines", force: :cascade do |t|
     t.bigint "wine_id", null: false
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "my_wine_cellar_id", null: false
-    t.index ["my_wine_cellar_id"], name: "index_my_wines_on_my_wine_cellar_id"
     t.index ["wine_id"], name: "index_my_wines_on_wine_id"
   end
 
@@ -54,11 +61,13 @@ ActiveRecord::Schema.define(version: 2021_05_13_111316) do
     t.integer "quantity"
     t.integer "size"
     t.integer "vintage"
-    t.bigint "my_wine_id", null: false
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["my_wine_id"], name: "index_stocks_on_my_wine_id"
+    t.bigint "wine_id", null: false
+    t.bigint "my_wine_cellar_id", null: false
+    t.index ["my_wine_cellar_id"], name: "index_stocks_on_my_wine_cellar_id"
+    t.index ["wine_id"], name: "index_stocks_on_wine_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -101,8 +110,10 @@ ActiveRecord::Schema.define(version: 2021_05_13_111316) do
   add_foreign_key "appellation_wineries", "wineries"
   add_foreign_key "my_wine_cellars", "users"
   add_foreign_key "my_wine_cellars", "wine_cellars"
-  add_foreign_key "my_wines", "my_wine_cellars"
+  add_foreign_key "my_wineries", "my_wine_cellars"
+  add_foreign_key "my_wineries", "wineries"
   add_foreign_key "my_wines", "wines"
-  add_foreign_key "stocks", "my_wines"
+  add_foreign_key "stocks", "my_wine_cellars"
+  add_foreign_key "stocks", "wines"
   add_foreign_key "wines", "appellation_wineries"
 end

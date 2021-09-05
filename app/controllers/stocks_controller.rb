@@ -22,7 +22,7 @@ class StocksController < ApplicationController
   # POST /stocks or /stocks.json
   def create
     @stock = Stock.new(stock_params)
-    @previous_stock = Stock.where(vintage: @stock.vintage, size: @stock.size, my_wine_id: @stock.my_wine_id).first
+    @previous_stock = Stock.where(vintage: @stock.vintage, size: @stock.size, wine_id: @stock.wine_id).first
 
     if @previous_stock
       @new_quantity = @stock.quantity + @previous_stock.quantity
@@ -65,6 +65,6 @@ class StocksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def stock_params
-      params.require(:stock).permit(:quantity, :size, :vintage, :my_wine_id, :description)
+      params.require(:stock).permit(:quantity, :size, :vintage, :wine_id, :description, :my_wine_cellar_id)
     end
 end

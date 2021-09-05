@@ -6,10 +6,11 @@ Rails.application.routes.draw do
   resources :wine_cellars
   resources :my_wine_cellars do
     resources :wines
-    resources :my_wines
     resources :wineries
+    resources :my_wineries
   end
 
+  resources :my_wineries
   resources :stocks
   resources :wines
   resources :appellations

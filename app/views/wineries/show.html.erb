@@ -19,11 +19,11 @@
           <tbody class="table">
               <td class= "align-middle"><h5 class="p-0 m-0"><%= wine.name %></h5> </td>
               <% @vintages.each do |vintage| %>
-                  <% if @stocks.where(vintage: vintage, my_wine_id: wine.my_wines.first.id).exists? %>
+                  <% if @stocks.where(vintage: vintage, wine_id: wine.id).exists? %>
                     <tr>
                       <th class="text-center"><%= vintage %></th>
                     <% @sizes.each do |size| %>
-                      <% if @stocks.where(vintage: vintage, size:size, my_wine_id: wine.my_wines.first.id).blank? %>
+                      <% if @stocks.where(vintage: vintage, size:size, wine_id: wine.id).blank? %>
                         <td></td>
                       <% else %>
                       <% @stock = @stocks.find { |stock| stock.size == size && stock.vintage == vintage} %>
